@@ -1,15 +1,81 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href = "Assets/CSS Files/reset.css">
-    <link href = "Assets/CSS Files/style.css">
-    <title>Document</title>
+
+    <link rel = "stylesheet" href = "Assets/CSS Files/reset.css">
+
+    <link rel = "stylesheet" href = "Assets/CSS Files/style.css">
+
+    <title>Weather Dashboard</title>
+
 </head>
+
 <body>
+
+    <header>
+
+        <h1>Weather Dashboard</h1>
+
+    </header>
+
+    <main class="flex-row justify-space-between">
+
+        <div class="col-12 col-md-4">
     
+          <div class="card">
+
+            <h3 class= "city-header">Search for a City:</h3>
+
+            <form id="user-form" class="card-body">
+
+              <label class="form-label" for="city-name"></label>
+
+              <input name="city-name" id="city-name" type="text" autofocus="true" class="form-input" />
+
+              <button type="submit" class="btn">Search</button>
+
+            </form>
+
+          </div>
+    
+          <div class="cities">
+
+            <h3 class="city-selection-header">-----------------------------</h3>
+
+            <div id="city-buttons" class="city-options">
+
+              <button data-language="Austin" class="btn">Austin</button>
+
+              <button data-language="Chicago" class="btn">Chicago</button>
+
+              <button data-language="New York" class="btn">New York</button>
+
+              <button data-language="Orlando" class="btn">Orlando</button>
+
+              <button data-language="San Francisco" class="btn">San Francisco</button>
+
+              <button data-language="Seattle" class="btn">Seattle</button>
+
+              <button data-language="Denver" class="btn">Denver</button>
+
+              <button data-language="Atlanta" class="btn">Atlanta</button>
+
+            </div>
+
+          </div>
+
+        </div>
+
 </body>
+
 <script src = "Assets/JS File/script.js"></script>
+
 </html>
