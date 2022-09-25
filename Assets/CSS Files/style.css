@@ -1,8 +1,16 @@
 h1 {
 
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 36px;
+    font-weight: bolder;
     text-align: center;
-    background-color: blue;
+    background: linear-gradient(to right, 
+    rgb(109, 131, 238) 0%, 
+    rgb(34, 63, 205) 33%, 
+    rgb(81, 26, 223) 66%, 
+    rgb(135, 65, 201) 100%);
     color: white;
+    padding: 20px;
 
 }
 
