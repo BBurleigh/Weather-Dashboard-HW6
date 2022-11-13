@@ -10,6 +10,10 @@
 
     <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"/>
+
     <link rel = "stylesheet" href = "Assets/CSS Files/reset.css">
 
     <link rel = "stylesheet" href = "Assets/CSS Files/style.css">
@@ -26,127 +30,57 @@
 
     </header>
 
-    <main class = "flex-row justify-space-between">
+    <div id = "header" class = "jumbotron-fluid text-container">
 
-        <div class = "col-12 col-md-4">
-    
-          <div class = "city-container">
+      <h2 id = "header-text" class="display-2"></h2>
 
-            <h3 class = "city-header"> Search for a City: </h3>
+      <div id = "artist-credit"></div>
 
-            <form id = "user-form" class = "form">
+    </div>
 
-              <label class = "form-label" for = "city-name"></label>
+    <div id="content-left" class="col-md-3">
 
-              <input name = "city-name" id = "city-name" type = "text" autofocus= "true" class = "form-input" placeholder = "Select city"/>
+      <form>
 
-              <button type = "submit" class = "btn" id = "search"> Search </button>
+          <label for="search-city">Search for a City:</label>
 
-            </form>
+          <div class="form-row">
 
-          </div>
-    
-          <div class = "cities col-12 col-md-4">
+              <input id="search-city" class="form-control" name="city" value="Type a city's name"></input>
 
-            <h3 class = "city-selection-header">-----------------------------</h3>
-
-            <div id = "city-buttons" class = "city-options">
-
-              <button data-language = "Austin" class = "btn col"> Austin </button>
-
-              <button data-language = "Chicago" class = "btn col"> Chicago </button>
-
-              <button data-language = "New York" class = "btn"> New York </button>
-
-              <button data-language = "Orlando" class = "btn"> Orlando </button>
-
-              <button data-language = "San Francisco" class = "btn"> San Francisco </button>
-
-              <button data-language = "Seattle" class = "btn"> Seattle </button>
-
-              <button data-language = "Denver" class = "btn"> Denver </button>
-
-              <button data-language = "Atlanta" class = "btn"> Atlanta </button>
-
-            </div>
+              <button id="search-button" class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
 
           </div>
 
-        </div>
+      </form>
 
-        <div class = "col-12 col-md-4" id = "display-information">
+      <div id="search-error"></div>
+      <!-- list of prior searched cities -->
 
-            <h3></h3>    
+      <ul id="city-results" class="list-group mt-4"></ul>
+      <!-- clear storage button -->
 
-            <p> Temp: </p>
+      <a id="clear-storage" href="#"></a>    
 
-            <p> Wind: </p>
+  </div>
 
-            <p> Humidity: </p>
-
-            <p> UV Index</p>
-
-        </div>
-
-        <h4> 5-Day Forecast: </h4>
-
-        <div class="forecast">
-
-           <div class = "container" id = "tomorrow">
-
-             <p> Date </p>
-
-             <p> Temp: </p>
-
-             <p> Wind: </p>
-
-             <p> Humidity </p>
-
-           </div>
-
-           <div class = "container" id = "two-days-later">             
-            
-            <p> Date </p>
-
-            <p> Temp: </p>
-
-            <p> Wind: </p>
-
-            <p> Humidity </p></div>
-
-           <div class = "container" id = "three-days-later">             
-            
-            <p> Date </p>
-
-            <p> Temp: </p>
-
-            <p> Wind: </p>
-
-            <p> Humidity </p></div>
-
-           <div class = "container" id = "four-days-later">             
-            
-            <p> Date </p>
-
-            <p> Temp: </p>
-
-            <p> Wind: </p>
-
-            <p> Humidity </p></div>
-
-           <div class = "container" id = "five-days-later">            
-            
-            <p> Date </p>
-
-            <p> Temp: </p>
-
-            <p> Wind: </p>
-
-            <p> Humidity </p></div>
-
-        </div>
-
+  <!-- Right side content showing current weather and five day forecast displays on search -->
+  <div id="content-right" class="col-md-9 pt-4">
+      <!-- Current weather displayed on top -->
+      <div id="current-weather" class="border rounded"></div>
+      <!-- Five day forecast below the current weather -->
+      <div id="five-day-forecast" class="mt-5"></div>
+  </div>
+</div>
+</div>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
 <script src = "Assets/JS File/script.js"></script>
 
