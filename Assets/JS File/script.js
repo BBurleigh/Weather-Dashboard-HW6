@@ -4,17 +4,30 @@ function getApi() {
 
 var queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
 
+let city = `${city}`;
+
 fetch(queryURL)
-  .then(function (response) {
+  .then(((function (response) {
     return response.json();
   })
-  .then(function (data) {
-    console.log(data)
-    console.log(data.main.temp)
-  })
+  .then(function (response) {
+    recallCity(city);
+
+    let currentWeatherIcon = "https://openweathermap.org/img/w/" + response.weather[0].icon + "png";
+
+    let presentTimeUTC = response.dt;
+
+    let presentTimeZoneOffset = response.timezone;
+
+    let currentTimeZoneOffsetHours = currentTimeZoneOffset / 60 . 60;
+
+    
+  })))
 
   
 }
+
+
 
 getApi()
 
