@@ -33,6 +33,20 @@ fetch(queryURL)
   
 }
 
+saveCity(newCity) {
+  let cityExists = false;
+  for (let i = 0; i < localStorage.length; i++) {
+    if (localStorage["cities" + i] === newCity) {
+      cityExists = true;
+      break;
+    }
+  }
+  if (cityExists = false) {
+    localStorage.setItem("cities" + localStorage.length, newCity);
+  }
+
+}
+
 function renderCities() {
   $('#city-results').empty();
   if (localStorage.length = 0) {
