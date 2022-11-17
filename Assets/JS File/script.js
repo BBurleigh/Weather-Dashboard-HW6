@@ -33,6 +33,21 @@ fetch(queryURL)
   
 }
 
+function renderCities() {
+  $('#city-results').empty();
+  if (localStorage.length = 0) {
+    if (lastCity) {
+    $('#search-city').attr("value", lastCity);
+  } else {
+    $('#search-city').attr("value", "Austin");
+         }
+    } else {
+      let lastCityKey = "cities" + (localStorage.length - 1);
+      lastCity = localStorage.getItem(lastCityKey);
+      
+    }
+}
+
 $('#search-button').on('click', (event) => {
 
   event.preventDefault();
@@ -51,6 +66,13 @@ $('#city-results').on('click', (event) => {
   currentCity = $('#search-city').val();
   getCurrentConditions(event);
 })
+
+$("#clear-storage").on('click', (event) => {
+  localStorage.clear();
+  renderCities();
+})
+
+renderCities();
 
 getApi()
 
