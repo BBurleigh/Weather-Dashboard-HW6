@@ -25,7 +25,7 @@ fetch(queryURL)
 
     let presentTimeZoneOffset = response.timezone;
 
-    let currentTimeZoneOffsetHours = currentTimeZoneOffset / 60 . 60;
+    let currentTimeZoneOffsetHours = currentTimeZoneOffset / 60 / 60;
 
     
   })))
@@ -43,6 +43,13 @@ $('#search-button').on('click', (event) => {
 
   getApi(event);
 
+})
+
+$('#city-results').on('click', (event) => {
+  event.preventDefault();
+  $('#search-city').val(event.target.textContent);
+  currentCity = $('#search-city').val();
+  getCurrentConditions(event);
 })
 
 getApi()
