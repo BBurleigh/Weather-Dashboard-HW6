@@ -56,9 +56,43 @@ function renderCities() {
     $('#search-city').attr("value", "Austin");
          }
     } else {
+
       let lastCityKey = "cities" + (localStorage.length - 1);
+
       lastCity = localStorage.getItem(lastCityKey);
-      
+
+      $('#search-city').attr("value", lastCity);
+
+      for (let i = 0; i < localStorage.length; i++) {
+
+        let city = localStorage.getItem("cities" + 1);
+        
+        let cityEl;
+
+        if (currentCity === ""){
+
+          cityEl = `<button type = "button" class = "list-group-item list-group-item-action active">${city}<button></li>`;
+
+        } else {
+
+          cityEl = `<button type = "button" class = "list-group-item list-group-item-action">${city}<button></li>`;
+
+        }
+
+        $('#city-results').prepend(cityEl);
+
+      }
+
+      if (localStorage.length > 0) {
+
+        $('#clear-storage').html($('<a id = "clear-storage" href = "#"> clear </a>'));
+
+      } else {
+
+        $('#clear-storage').html("");
+
+      }
+
     }
 }
 
