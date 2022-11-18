@@ -25,42 +25,122 @@ fetch(queryURL)
 
     let presentTimeZoneOffset = response.timezone;
 
-    let currentTimeZoneOffsetHours = currentTimeZoneOffset / 60 / 60;
+    let presentTimeZoneOffsetHours = currentTimeZoneOffset / 60 / 60;
 
-    let thisMoment = moment.unix(dayTimeUTC).utc().utcOffset(currentTimeZoneOffsetHours);
+    let thisMoment = moment.unix(presentTimeUTC).utc().utcOffset(presentTimeZoneOffsetHours)
 
-    let iconURL = "https://openweathermap.org/img/w/" + dayData.weather[0].icon + ".png";
+    renderCities();
 
-    if (thisMoment.format("HH:mm:ss") === "11:00:00" || thisMoment.format("HH:mm:ss") === "12:00:00" || thisMoment.format("HH:mm:ss") === "13:00:00" ){
+    getFiveDayForecast();
 
-      fiveDayForecastHTML += `
-      <div class = "weather-card card m-2 p0">
-        <ul class = "list-unstyled p-3">
-          <li>${thisMoment.format("MM/DD?YY")}</li>
-          <li class = "weather-icon"><img src = "${iconURL}"></li>
-          <li>Temp: ${dayData.main.temp}&#8457;</li>
-          <br>
-          <li>Humidity: ${dayData.main.humidity}%</li>
-        </ul>
-      </div>`;
+    $('#header-text').text(response.name);
 
-    }
+    let currentWeatherHTML = 
+    `
+    <h3>${response.name} ${currentMoment.format("(MM/DD/YY)")}<img src="${currentWeatherIcon}"></h3>
+            <ul class="list-unstyled">
+                <li>Temperature: ${response.main.temp}&#8457;</li>
+                <li>Humidity: ${response.main.humidity}%</li>
+                <li>Wind Speed: ${response.wind.speed} mph</li>
+                <li id="uvIndex">UV Index:</li>
+            </ul>`;
 
-  }
-  
-  fiveDayForecastHTML += `</div.`;
+            $('#current-weather').html(currentWeatherHTML);
 
-  $('#five-day-forecast').html(fiveDayForecastHTML;)
-  )}
+            let latitude = response.coord.lat;
 
-  
+            let longitude = response.coord.lon;
+
+            let uvQueryURL = "api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&APPID=" + owmAPI;
+            
+            uvQueryURL = "https://cors-anywhere.herokuapp.com/" + uvQueryURL;
+
+            fetch(uvQueryURL)
+            
+            .then((response) => {
+
+                return response.json();
+
+            })
+            .then((response) => {
+
+                let uvIndex = response.value;
+
+                $('#uvIndex').html(`UV Index: <span id="uvVal"> ${uvIndex}</span>`);
+
+                if (uvIndex>=0 && uvIndex<3) {
+                    
+                  $('#uvVal').attr("class", "uv-favorable");
+
+                } else if (uvIndex >= 3 && uvIndex < 8) {
+
+                    $('#uvVal').attr("class", "uv-moderate");
+
+                } else if (uvIndex >= 8) {
+
+                    $('#uvVal').attr("class", "uv-severe");
+
+                }
+            });
+        })
 }
 
-saveCity(newCity) {
+function getFiveDayForecast() {
 
-  let cityExists = false;
+  let city = $('#search-city').val();
+    
+    let queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial" + "&APPID=" + owmAPI;
+    
+    fetch(queryURL)
+        .then((response) => {
+            return response.json();
+        })
+        .then((response) => {
+        
+        let fiveDayForecastHTML = `
+        <h2>5-Day Forecast:</h2>
+        <div id="fiveDayForecastUl" class="d-inline-flex flex-wrap ">`;
+        
+        for (let i = 0; i < response.list.length; i++) {
+            let dayData = response.list[i];
+
+            let dayTimeUTC = dayData.dt;
+
+            let timeZoneOffset = response.city.timezone;
+
+            let timeZoneOffsetHours = timeZoneOffset / 60 / 60;
+
+            let thisMoment = moment.unix(dayTimeUTC).utc().utcOffset(timeZoneOffsetHours);
+
+            let iconURL = "https://openweathermap.org/img/w/" + dayData.weather[0].icon + ".png";
+            
+            if (thisMoment.format("HH:mm:ss") === "11:00:00" || thisMoment.format("HH:mm:ss") === "12:00:00" || thisMoment.format("HH:mm:ss") === "13:00:00") {
+
+                fiveDayForecastHTML += `
+                <div class="weather-card card m-2 p0">
+                    <ul class="list-unstyled p-3">
+                        <li>${thisMoment.format("MM/DD/YY")}</li>
+                        <li class="weather-icon"><img src="${iconURL}"></li>
+                        <li>Temp: ${dayData.main.temp}&#8457;</li>
+                        <br>
+                        <li>Humidity: ${dayData.main.humidity}%</li>
+                    </ul>
+                </div>`;
+
+            }
+        }
+        
+        fiveDayForecastHTML += `</div>`;
+        
+        $('#five-day-forecast').html(fiveDayForecastHTML);
+    })
+}
+
+function saveCity(newCity) {
 
   for (let i = 0; i < localStorage.length; i++) {
+
+    let cityExists = false;
 
     if (localStorage["cities" + i] === newCity) {
 
@@ -80,13 +160,21 @@ saveCity(newCity) {
 }
 
 function renderCities() {
+
   $('#city-results').empty();
+
   if (localStorage.length = 0) {
+
     if (lastCity) {
+
     $('#search-city').attr("value", lastCity);
+
   } else {
+
     $('#search-city').attr("value", "Austin");
+
          }
+
     } else {
 
       let lastCityKey = "cities" + (localStorage.length - 1);
@@ -141,18 +229,26 @@ $('#search-button').on('click', (event) => {
 })
 
 $('#city-results').on('click', (event) => {
+
   event.preventDefault();
+
   $('#search-city').val(event.target.textContent);
+
   currentCity = $('#search-city').val();
+
   getCurrentConditions(event);
+
 })
 
 $("#clear-storage").on('click', (event) => {
+
   localStorage.clear();
+
   renderCities();
+
 })
 
 renderCities();
 
-getApi()
+getApi();
 
