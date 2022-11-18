@@ -13,7 +13,7 @@ let city = `${city}`;
 currentCity = city;
 
 fetch(queryURL)
-  .then(((function (response) {
+  .then(function (response) {
     return response.json();
   })
   .then(function (response) {
@@ -27,22 +27,54 @@ fetch(queryURL)
 
     let currentTimeZoneOffsetHours = currentTimeZoneOffset / 60 / 60;
 
-    
-  })))
+    let thisMoment = moment.unix(dayTimeUTC).utc().utcOffset(currentTimeZoneOffsetHours);
+
+    let iconURL = "https://openweathermap.org/img/w/" + dayData.weather[0].icon + ".png";
+
+    if (thisMoment.format("HH:mm:ss") === "11:00:00" || thisMoment.format("HH:mm:ss") === "12:00:00" || thisMoment.format("HH:mm:ss") === "13:00:00" ){
+
+      fiveDayForecastHTML += `
+      <div class = "weather-card card m-2 p0">
+        <ul class = "list-unstyled p-3">
+          <li>${thisMoment.format("MM/DD?YY")}</li>
+          <li class = "weather-icon"><img src = "${iconURL}"></li>
+          <li>Temp: ${dayData.main.temp}&#8457;</li>
+          <br>
+          <li>Humidity: ${dayData.main.humidity}%</li>
+        </ul>
+      </div>`;
+
+    }
+
+  }
+  
+  fiveDayForecastHTML += `</div.`;
+
+  $('#five-day-forecast').html(fiveDayForecastHTML;)
+  )}
 
   
 }
 
 saveCity(newCity) {
+
   let cityExists = false;
+
   for (let i = 0; i < localStorage.length; i++) {
+
     if (localStorage["cities" + i] === newCity) {
+
       cityExists = true;
+
       break;
+
     }
   }
+
   if (cityExists = false) {
+
     localStorage.setItem("cities" + localStorage.length, newCity);
+
   }
 
 }
