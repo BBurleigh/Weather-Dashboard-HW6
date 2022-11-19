@@ -6,28 +6,31 @@ var lastCity = ""
 
 function getApi() {
 
-var queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
-
-let city = `${city}`;
+let city = document.getElementById("search-city").value;
 
 currentCity = city;
 
+var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
+
 fetch(queryURL)
-  .then(function (response) {
+  .then((response) => {
     return response.json();
   })
-  .then(function (response) {
-    recallCity(city);
+  .then((response) => {
 
-    let currentWeatherIcon = "https://openweathermap.org/img/w/" + response.weather[0].icon + "png";
+    saveCity(city);
 
-    let presentTimeUTC = response.dt;
+    var icon = response.current.weather[0].icon;
 
-    let presentTimeZoneOffset = response.timezone;
+    var currentWeatherIcon = "https://openweathermap.org/img/w/" + icon + ".png";
 
-    let presentTimeZoneOffsetHours = currentTimeZoneOffset / 60 / 60;
+    var presentTimeUTC = response.dt;
 
-    let thisMoment = moment.unix(presentTimeUTC).utc().utcOffset(presentTimeZoneOffsetHours)
+    var presentTimeZoneOffset = response.timezone;
+
+    var presentTimeZoneOffsetHours = presentTimeZoneOffset / 60 / 60;
+
+    var thisMoment = moment.unix(presentTimeUTC).utc().utcOffset(presentTimeZoneOffsetHours)
 
     renderCities();
 
@@ -37,7 +40,7 @@ fetch(queryURL)
 
     let currentWeatherHTML = 
     `
-    <h3>${response.name} ${currentMoment.format("(MM/DD/YY)")}<img src="${currentWeatherIcon}"></h3>
+    <h3>${response.name} ${thisMoment.format("(MM/DD/YY)")}<img src="${currentWeatherIcon}"></h3>
             <ul class="list-unstyled">
                 <li>Temperature: ${response.main.temp}&#8457;</li>
                 <li>Humidity: ${response.main.humidity}%</li>
@@ -89,7 +92,7 @@ function getFiveDayForecast() {
 
   let city = $('#search-city').val();
     
-    let queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial" + "&APPID=" + owmAPI;
+    let queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial" + "&APPID=" + APIKey;
     
     fetch(queryURL)
         .then((response) => {
