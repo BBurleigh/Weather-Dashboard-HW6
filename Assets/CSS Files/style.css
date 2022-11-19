@@ -1,7 +1,7 @@
 h1 {
 
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 36px;
+    font-size: 54px;
     font-weight: bolder;
     text-align: center;
     background: linear-gradient(to right, 
@@ -11,73 +11,104 @@ h1 {
     rgb(92, 19, 160) 100%);
     color: white;
     padding: 20px;
+    text-shadow: 2px 1px #716f6f;
+}
+
+.jumbotron {
+
+   padding: 1rem;
+   border-radius: 0;
 
 }
 
-h4 {
 
-   font-family: Arial, Helvetica, sans-serif;
-   font-size: 20px;
-   font-weight: bolder;
+#search-city {
 
-}
-
-.city-header {
-
-   font-family: Arial, Helvetica, sans-serif;
-   font-size: 24px;
-   font-weight: bolder;
-   padding: 10px;
+   width: 80%;
 
 }
 
-#city-name {
 
-   margin: 10px;
-   font-size: 18px;
-   padding: 4px;
+#search-button-icon {
+
+   width: 15px;
+   display: inline-block;
 
 }
 
-.btn {
 
-   display: block;
-   padding: 5px;
-   margin-top: 10px;
-   margin-left: 10px;
-   margin-bottom: 10px;
-   width: 24%;
-   background-color: rgb(201, 203, 204);
-   border-style: none;
-   border-radius: 4px;
-   
+#current-weather {
+
+   padding-left: 15px;
+
 }
 
-#search {
 
-   background-color: rgb(108, 167, 238);
+#clear-storage {
+
+   color:grey;
+   text-decoration: none;
+   font-size: .75em;
+   margin: .5em 0em 0em .5em;
+
+}
+
+
+.weather-card {
+
+   width: 9rem;
+   background-color: #0275d8;
    color: white;
-   width: 24%;
+   text-align: center;
 
 }
 
-#display-information {
 
-   border: 1px solid black;
-   line-height: 2.5;
-   border-radius: 2px;
+.uv-favorable{
 
-}
-
-.container {
-
-   background-color: rgb(53, 72, 97);
+   background-color: green;
+   border-radius: 5px;
    color: white;
-   line-height: 2.5;
-   display: flex;
-   border-radius: 2px;
-   flex-direction: column;
-   margin: 10px;
-   width: 20%;
 
+}
+
+.uv-moderate{
+
+   background-color: orange;
+   border-radius: 5px;
+   color: white;
+
+}
+
+.uv-severe{
+
+   background-color: red;
+   border-radius: 5px;
+   color: white;
+
+}
+
+@media only screen and (max-width: 992px) {
+
+   #search-city {
+
+       width:100%;
+
+   }
+
+   #search-button{
+
+       width:100%;
+
+   }
+
+}
+
+@media only screen and (max-width: 575px) {
+
+   #fiveDayForecastUl {
+
+       justify-content: center;
+       
+   }
 }
