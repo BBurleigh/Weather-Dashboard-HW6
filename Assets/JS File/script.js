@@ -1,4 +1,4 @@
-var APIKey = "f3659936b4dd484b16332e8037972e1e";
+const APIKey = "f3659936b4dd484b16332e8037972e1e";
 
 var currentCity = "";
 
@@ -6,21 +6,25 @@ var lastCity = ""
 
 function getApi() {
 
-let city = document.getElementById("search-city").value;
+let city = $('#search-city').val();
 
-currentCity = city;
+currentCity = $('#search-city').val();
 
-var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
+var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial" + "&APPID=" + APIKey;
 
 fetch(queryURL)
+
   .then((response) => {
+
     return response.json();
+
   })
+
   .then((response) => {
 
     saveCity(city);
 
-    var icon = response.current.weather[0].icon;
+    var icon = response.weather[0].icon;
 
     var currentWeatherIcon = "https://openweathermap.org/img/w/" + icon + ".png";
 
@@ -38,7 +42,7 @@ fetch(queryURL)
 
     $('#header-text').text(response.name);
 
-    let currentWeatherHTML = 
+    var currentWeatherHTML = 
     `
     <h3>${response.name} ${thisMoment.format("(MM/DD/YY)")}<img src="${currentWeatherIcon}"></h3>
             <ul class="list-unstyled">
@@ -50,11 +54,11 @@ fetch(queryURL)
 
             $('#current-weather').html(currentWeatherHTML);
 
-            let latitude = response.coord.lat;
+            var latitude = response.coord.lat;
 
-            let longitude = response.coord.lon;
+            var longitude = response.coord.lon;
 
-            let uvQueryURL = "api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&APPID=" + owmAPI;
+            var uvQueryURL = "api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&APPID=" + APIKey;
             
             uvQueryURL = "https://cors-anywhere.herokuapp.com/" + uvQueryURL;
 
@@ -67,11 +71,11 @@ fetch(queryURL)
             })
             .then((response) => {
 
-                let uvIndex = response.value;
+                var uvIndex = response.value;
 
                 $('#uvIndex').html(`UV Index: <span id="uvVal"> ${uvIndex}</span>`);
 
-                if (uvIndex>=0 && uvIndex<3) {
+                if (uvIndex>=0 && uvIndex < 3) {
                     
                   $('#uvVal').attr("class", "uv-favorable");
 
@@ -90,32 +94,38 @@ fetch(queryURL)
 
 function getFiveDayForecast() {
 
-  let city = $('#search-city').val();
+  var city = $('#search-city').val();
     
-    let queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial" + "&APPID=" + APIKey;
+    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial" + "&APPID=" + APIKey;
     
     fetch(queryURL)
+
         .then((response) => {
+
             return response.json();
+
         })
+
         .then((response) => {
         
-        let fiveDayForecastHTML = `
+        var fiveDayForecastHTML = 
+        `
         <h2>5-Day Forecast:</h2>
         <div id="fiveDayForecastUl" class="d-inline-flex flex-wrap ">`;
         
         for (let i = 0; i < response.list.length; i++) {
-            let dayData = response.list[i];
 
-            let dayTimeUTC = dayData.dt;
+            var dayData = response.list[i];
 
-            let timeZoneOffset = response.city.timezone;
+            var dayTimeUTC = dayData.dt;
 
-            let timeZoneOffsetHours = timeZoneOffset / 60 / 60;
+            var timeZoneOffset = response.city.timezone;
 
-            let thisMoment = moment.unix(dayTimeUTC).utc().utcOffset(timeZoneOffsetHours);
+            var timeZoneOffsetHours = timeZoneOffset / 60 / 60;
 
-            let iconURL = "https://openweathermap.org/img/w/" + dayData.weather[0].icon + ".png";
+            var thisMoment = moment.unix(dayTimeUTC).utc().utcOffset(timeZoneOffsetHours);
+
+            var iconURL = "https://openweathermap.org/img/w/" + dayData.weather[0].icon + ".png";
             
             if (thisMoment.format("HH:mm:ss") === "11:00:00" || thisMoment.format("HH:mm:ss") === "12:00:00" || thisMoment.format("HH:mm:ss") === "13:00:00") {
 
@@ -141,9 +151,9 @@ function getFiveDayForecast() {
 
 function saveCity(newCity) {
 
-  for (let i = 0; i < localStorage.length; i++) {
+  let cityExists = false;
 
-    let cityExists = false;
+  for (let i = 0; i < localStorage.length; i++) {
 
     if (localStorage["cities" + i] === newCity) {
 
